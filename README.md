@@ -4,5 +4,5 @@
 
 Среда разработки - Visual Studio 2022
 Базовая платформа - .NET Framework 4.7.
-Использование дополнительный компонент Newtonsoft.Json, 
+Использован дополнительный компонент Newtonsoft.Json, 
 поскольку базовый компонент System.Text.Json доступен в.NET Framework 4.7.2 и выше
