@@ -108,7 +108,7 @@ namespace FTPMGCalc
         //Влажность мерзлого грунта
         [JsonProperty(PropertyName = "Wm")]
         public double Wm { get; }
-
+        //концентрация порового раствора - , доли единицы
         public double Cbf
         {
             get
@@ -117,6 +117,7 @@ namespace FTPMGCalc
             }
         }
         [JsonProperty(PropertyName = "Tbf")]
+        //емпература начала замерзания грунта
         public double Tbf
         {
             get
@@ -144,10 +145,10 @@ namespace FTPMGCalc
             Wtot = wtot;
             Wm = wm;
         }
-        // <summary>
-        //температура начала замерзания грунта по формуле (Б.3).
-        //</summary>
-        private double GetTbf()
+        /// <summary>
+        ///температура начала замерзания грунта по формуле (Б.3).
+        ///</summary>
+        public double GetTbf()
         {
             double A, B;
             switch (_Salt)
@@ -190,9 +191,9 @@ namespace FTPMGCalc
             return A - B * (53 * Cbf + 40 * Math.Pow(Cbf, 2));
         }
 
-        // <summary>
-        //температура начала замерзания грунта - Торф
-        //</summary>
+        /// <summary>
+        ///температура начала замерзания грунта - Торф
+        ///</summary>
         private double PeatTbf()
         {
             double tbf = double.NaN;
@@ -218,22 +219,21 @@ namespace FTPMGCalc
                     throw new Exception("not peat type");
             }
             return tbf;
-
         }
 
-        // <summary>
-        //Концентрация порового раствора
-        //</summary>
-        private double GetCbf()
+        /// <summary>
+        ///Концентрация порового раствора
+        ///</summary>
+        public double GetCbf()
         {
             double W = Itot <= 0.4 ? Wtot : Wm;
             return Dsal / (Dsal + 100 * W);
         }
 
         #region type works
-        // <summary>
-        //получить строковое значение для типа грунта
-        //</summary>
+        /// <summary>
+        ///получить строковое значение для типа грунта
+        ///</summary>
         public string StringType()
         {
             switch (_Type)
@@ -256,9 +256,9 @@ namespace FTPMGCalc
             }
         }
 
-        // <summary>
-        //установить тип грунта
-        //</summary>
+        /// <summary>
+        ///установить тип грунта
+        ///</summary>
         private void SetType(string type)
         {
             switch (type)
@@ -287,9 +287,9 @@ namespace FTPMGCalc
             }
         }
 
-        // <summary>
-        //установить тип грунта
-        //</summary>
+        /// <summary>
+        ///установить тип грунта
+        ///</summary>
         private void SetType(int type)
         {
             if (0 <= type && type < 7)
@@ -298,9 +298,9 @@ namespace FTPMGCalc
                 _Type = GroundTypes.unknown;
         }
 
-        // <summary>
-        //получить строковое значение для типа засоленности
-        //</summary>
+        /// <summary>
+        ///получить строковое значение для типа засоленности
+        ///</summary>
         public string StringSaltsType()
         {
             switch (_Salt)
@@ -317,9 +317,9 @@ namespace FTPMGCalc
             }
         }
 
-        // <summary>
-        //установить тип засоленности грунта
-        //</summary>
+        /// <summary>
+        ///установить тип засоленности грунта
+        ///</summary>
         private void SetSaltsType(string type)
         {
             switch (type)
@@ -339,9 +339,9 @@ namespace FTPMGCalc
             }
         }
 
-        // <summary>
-        //установить тип засоленности грунта
-        //</summary>
+        /// <summary>
+        ///установить тип засоленности грунта
+        ///</summary>
         private void SetSaltsType(int type)
         {
             if (0 < type && type < 4)
@@ -351,5 +351,49 @@ namespace FTPMGCalc
         }
         #endregion
 
+        #region equatable
+        //переопределение стандартных методов сравнения
+        //для поиска в коллекции 
+        public static bool operator !=(FTPMGData leftObj, FTPMGData rightObj)
+        {
+            return !(leftObj == rightObj);
+        }
+
+        public static bool operator ==(FTPMGData leftObj, FTPMGData rightObj)
+        {
+            if (ReferenceEquals(leftObj, rightObj))
+            {
+                return true;
+            }
+            if (ReferenceEquals(null, leftObj) || ReferenceEquals(null, rightObj))
+            {
+                return false;
+            }
+            if (leftObj._Type == rightObj._Type && leftObj._Salt == rightObj._Salt &&
+                leftObj.Dsal == rightObj.Dsal && leftObj.Itot == rightObj.Itot &&
+                leftObj.Wtot == rightObj.Wtot && leftObj.Wm == rightObj.Wm)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public override bool Equals(object obj)
+        {
+            try
+            {
+                return (this == (FTPMGData)obj);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+        #endregion
     }
 }

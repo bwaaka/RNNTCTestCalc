@@ -6,8 +6,6 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using FTPMGCalc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Linq;
 using System.Drawing;
 
 namespace RNtestCalc
@@ -351,6 +349,22 @@ namespace RNtestCalc
             {
                 MessageBox.Show("Не возможно обработать сообщение об ошибке " + ex.Message);
             }
+        }
+
+        private void dataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+               string groundType = (string)dataGridView.CurrentRow.Cells[0].Value;
+               string saltType = (string)dataGridView.CurrentRow.Cells[1].Value;
+               int dsal = (int)dataGridView.CurrentRow.Cells[2].Value;
+               double itot = (double)dataGridView.CurrentRow.Cells[3].Value;
+               double wtot = (double)dataGridView.CurrentRow.Cells[4].Value;
+               double wm = (double)dataGridView.CurrentRow.Cells[5].Value;
+               FTPMGData tmp = new FTPMGData(groundType, saltType, dsal, itot, wtot, wm);
+                if (Lc.Contains(tmp))
+                    Lc.Remove(tmp);
+             }
         }
     }
 }
