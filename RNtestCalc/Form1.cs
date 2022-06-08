@@ -98,13 +98,13 @@ namespace RNtestCalc
             {
                 e.Cancel = true;
                 textBoxItot.Focus();
-                errorProvider.SetError(textBoxItot, "Степень засоленности должна быть определена");
+                errorProvider.SetError(textBoxItot, "Льдистость должна быть определена");
             }
             if (!Regex.IsMatch(input, pattern))
             {
                 e.Cancel = true;
                 textBoxItot.Focus();
-                errorProvider.SetError(textBoxItot, "Степень засоленности должна быть число");
+                errorProvider.SetError(textBoxItot, "Льдистость должна быть число");
             }
             else
             {
@@ -126,13 +126,13 @@ namespace RNtestCalc
             {
                 e.Cancel = true;
                 textBoxWtot.Focus();
-                errorProvider.SetError(textBoxWtot, "Степень засоленности должна быть определена");
+                errorProvider.SetError(textBoxWtot, "Суммарная влажность должна быть определена");
             }
             if (!Regex.IsMatch(input, pattern))
             {
                 e.Cancel = true;
                 textBoxWtot.Focus();
-                errorProvider.SetError(textBoxWtot, "Степень засоленности должна быть число");
+                errorProvider.SetError(textBoxWtot, "Суммарная влажность должна быть число");
             }
             else
             {
@@ -154,13 +154,13 @@ namespace RNtestCalc
             {
                 e.Cancel = true;
                 textBoxWm.Focus();
-                errorProvider.SetError(textBoxWm, "Степень засоленности должна быть определена");
+                errorProvider.SetError(textBoxWm, "Влажность мерзлого грунта должна быть определена");
             }
             if (!Regex.IsMatch(input, pattern))
             {
                 e.Cancel = true;
                 textBoxWm.Focus();
-                errorProvider.SetError(textBoxWm, "Степень засоленности должна быть число");
+                errorProvider.SetError(textBoxWm, "Влажность мерзлого грунта должна быть число");
             }
             else
             {
